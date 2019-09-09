@@ -1,22 +1,28 @@
 import React from 'react';
-import ListItem from '../task-list-item/task-list-item';
+import ListItem from '../task-list-item';
 import './task-list.css';
 
-const TaskList = ({ data }) => {
+
+const TaskList = ({ data, onDelete }) => {
+    console.log(data)
     const items = data.map((item) => {
 
-        const {_id, ...itemProps } = item;
+        const { _id, ...itemProps } = item;
         return (
             <li className="list-group-item" key={_id}>
-                <ListItem { ...itemProps} />
+                <ListItem {...itemProps}
+                    onDelete={() => onDelete(_id)} />
             </li>
         );
     });
 
     return (
-        <ul className="list-group task-list">
-            {items}
-        </ul>
+
+        <div>
+            <ul className="list-group task-list">
+                {items}
+            </ul>
+        </div>
     );
 };
 
