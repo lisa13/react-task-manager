@@ -18,7 +18,8 @@ export default class App extends Component {
             this.createTasks('Edit emails'),
             this.createTasks('Delet emails')
         ],
-        term: ''
+        term: '',
+        filter: 'all'
     }
 
     createTasks(text) {
@@ -90,20 +91,37 @@ export default class App extends Component {
         }
         return items.filter((item) => {
             return item.label
-            .toLowerCase()
-            .indexOf(term.toLowerCase()) > -1;
+                .toLowerCase()
+                .indexOf(term.toLowerCase()) > -1;
         });
     }
 
     onSearch = (term) => {
-        this.setState({term})
+        this.setState({ term })
+    }
+
+    filter = (items, filter) => {
+        switch (filter) {
+            case 'all':
+                return items;
+            case 'active':
+                return items.filter((item) => !item.done);
+            case 'done':
+                return items.filter((item) => item.done);
+            default:
+                return items;
+        }
+    }
+
+    onFilter = (filter) => {
+        this.setState({ filter })
     }
 
     render() {
 
-        const { taskData, term } = this.state;
+        const { taskData, term, filter } = this.state;
 
-        const visibleItems = this.search(taskData, term);
+        const visibleItems = this.filter(this.search(taskData, term), filter);
 
         const doneItems = taskData.filter((el) => el.done).length;
         const toDo = taskData.length - doneItems;
@@ -114,7 +132,8 @@ export default class App extends Component {
                     done={doneItems} />
                 <div className="top-panel d-flex">
                     <SearchPannel onSearch={this.onSearch} />
-                    <ItemStatusFilter />
+                    <ItemStatusFilter filter={filter}
+                        onFilter={this.onFilter} />
                 </div>
                 <TaskList data={visibleItems}
                     onDelete={this.deleteItem}
