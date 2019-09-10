@@ -9,7 +9,12 @@
     font-size: 2em;
 }
 
- h2 {
+ p {
     font-size: 1.2rem;
     color: grey;
+}
+
+span{
+    font-size: 1em;
+    color: rgb(47, 141, 102);
 }

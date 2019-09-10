@@ -3,7 +3,7 @@ import ListItem from '../task-list-item';
 import './task-list.css';
 
 
-const TaskList = ({ data, onDelete }) => {
+const TaskList = ({ data, onDelete, onToggleDone, onToggleImportant }) => {
     console.log(data)
     const items = data.map((item) => {
 
@@ -11,7 +11,9 @@ const TaskList = ({ data, onDelete }) => {
         return (
             <li className="list-group-item" key={_id}>
                 <ListItem {...itemProps}
-                    onDelete={() => onDelete(_id)} />
+                    onDelete={() => onDelete(_id)}
+                    onToggleDone={() => onToggleDone(_id)}
+                    onToggleImportant={() => onToggleImportant(_id)} />
             </li>
         );
     });
