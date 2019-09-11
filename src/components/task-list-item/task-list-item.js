@@ -16,7 +16,7 @@ export default class ListItem extends Component {
     }
 
     if (important) {
-      className += important;
+      className += ' important';
     }
 
 
